@@ -3,28 +3,6 @@ modules = ["java-graalvm22.3"]
 expertMode = true
 
 [workflows]
-runButton = "Project"
-
-[[workflows.workflow]]
-name = "Project"
-mode = "parallel"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Spring Boot API"
-
-[[workflows.workflow]]
-name = "Spring Boot API"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "./gradlew bootRun"
-waitForPort = 3001
-
-[workflows.workflow.metadata]
-outputType = "console"
 
 [[ports]]
 localPort = 3001
