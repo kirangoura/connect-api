@@ -24,10 +24,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "pg_ctl -D /tmp/postgres_data -l /tmp/postgres.log start"
-
-[workflows.workflow.metadata]
-outputType = "console"
+args = "pg_ctl -D /tmp/postgres_data -l /tmp/postgres.log start 2>&1 | grep -v \"another server\"; sleep 2; psql -U postgres -c \"CREATE DATABASE connect_db;\" 2>/dev/null || true; while true; do sleep 10; done"
 
 [[workflows.workflow]]
 name = "Spring Boot API"
@@ -35,7 +32,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd /home/runner/workspace && sleep 3 && JAVA_TOOL_OPTIONS=\"-Xmx512m\" ./gradlew --no-daemon bootRun"
+args = "sleep 5 && cd /home/runner/workspace && JAVA_TOOL_OPTIONS=\"-Xmx512m\" ./gradlew --no-daemon bootRun"
 waitForPort = 8080
 
 [workflows.workflow.metadata]
