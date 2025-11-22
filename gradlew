@@ -24,7 +24,7 @@
 APP_HOME=$(cd "$(dirname "$0")" && pwd) || exit
 
 # Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
-DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
+DEFAULT_JVM_OPTS='-Xmx512m -Xms512m'
 
 # Use the maximum available, or set MAX_FD != -1 to use that value.
 MAX_FD=maximum
