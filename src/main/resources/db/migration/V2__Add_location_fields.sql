@@ -12,8 +12,8 @@ UPDATE events SET city = 'Portland', zipcode = '97202', area = 'Southwest' WHERE
 UPDATE events SET city = 'Portland', zipcode = '97210', area = 'Central' WHERE id = 6;
 
 -- Add more sample events with different locations
-INSERT INTO events (title, category, date, location, icon, attendees, max_attendees, city, zipcode, area, description) VALUES
-('Beach Volleyball Tournament', 'Sports', 'Saturday, 2:00 PM', 'Ocean Beach', '🏐', 14, 18, 'Beaverton', '97006', 'West Side', 'Fun beach volleyball game for all skill levels'),
-('Sunset Cycling Group', 'Fitness', 'Friday, 5:30 PM', 'Burnside Bridge', '🚴', 9, 15, 'Southeast', '97214', 'Southeast', 'Evening bike ride through scenic routes'),
-('Art Workshop - Painting', 'Gathering', 'Saturday, 10:00 AM', 'Artist Studio', '🎨', 5, 12, 'Portland', '97214', 'Southeast', 'Learn landscape painting techniques'),
-('Brunch Social Meetup', 'Social', 'Sunday, 10:30 AM', 'Cafe Pearl', '🥐', 11, 16, 'Lake Oswego', '97034', 'South', 'Casual brunch gathering with new friends');
+INSERT INTO events (title, category, date, location, icon, attendees, max_attendees, city, zipcode, area, description, created_at) VALUES
+('Beach Volleyball Tournament', 'Sports', 'Saturday, 2:00 PM', 'Ocean Beach', '🏐', 14, 18, 'Beaverton', '97006', 'West Side', 'Fun beach volleyball game for all skill levels', CURRENT_TIMESTAMP),
+('Sunset Cycling Group', 'Fitness', 'Friday, 5:30 PM', 'Burnside Bridge', '🚴', 9, 15, 'Southeast', '97214', 'Southeast', 'Evening bike ride through scenic routes', CURRENT_TIMESTAMP),
+('Art Workshop - Painting', 'Gathering', 'Saturday, 10:00 AM', 'Artist Studio', '🎨', 5, 12, 'Portland', '97214', 'Southeast', 'Learn landscape painting techniques', CURRENT_TIMESTAMP),
+('Brunch Social Meetup', 'Social', 'Sunday, 10:30 AM', 'Cafe Pearl', '🥐', 11, 16, 'Lake Oswego', '97034', 'South', 'Casual brunch gathering with new friends', CURRENT_TIMESTAMP);
