@@ -12,19 +12,11 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "PostgreSQL Database"
+args = "Spring Boot API"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Spring Boot API"
-
-[[workflows.workflow]]
-name = "PostgreSQL Database"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "pg_ctl -D /tmp/postgres_data -l /tmp/postgres.log start 2>&1 | grep -v \"another server\"; sleep 2; psql -U postgres -c \"CREATE DATABASE connect_db;\" 2>/dev/null || true; while true; do sleep 10; done"
+args = "PostgreSQL Database"
 
 [[workflows.workflow]]
 name = "Spring Boot API"
@@ -37,6 +29,14 @@ waitForPort = 8080
 
 [workflows.workflow.metadata]
 outputType = "console"
+
+[[workflows.workflow]]
+name = "PostgreSQL Database"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "mkdir -p /tmp/postgres_data && initdb -D /tmp/postgres_data --auth=trust --username=runner -A trust 2>&1 | tail -3 && pg_ctl -D /tmp/postgres_data -l /tmp/postgres.log start && sleep 2 && createdb -U runner connect_db 2>/dev/null || true && echo \"✅ PostgreSQL ready\" && while true; do sleep 30; done"
 
 [[ports]]
 localPort = 3001
