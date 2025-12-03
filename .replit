@@ -36,7 +36,10 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "mkdir -p /tmp/postgres_data /run/postgresql 2>/dev/null; chmod 777 /run/postgresql 2>/dev/null; pg_ctl -D /tmp/postgres_data -l /tmp/postgres.log start >/dev/null 2>&1 || true; echo \"PostgreSQL started\"; while true; do sleep 30; done"
+args = "rm -rf /tmp/postgres_data/* && initdb -D /tmp/postgres_data -U runner --encoding=UTF8 >/dev/null 2>&1 && sed -i \"s/#listen_addresses = .*/listen_addresses = '127.0.0.1'/\" /tmp/postgres_data/postgresql.conf && pg_ctl -D /tmp/postgres_data -l /tmp/postgres.log start && createdb -h 127.0.0.1 -U runner connect_db 2>/dev/null || true && echo \"PostgreSQL ready\" && sleep infinity"
+
+[workflows.workflow.metadata]
+outputType = "console"
 
 [[ports]]
 localPort = 3001
@@ -54,6 +57,10 @@ exposeLocalhost = true
 [[ports]]
 localPort = 8080
 externalPort = 80
+
+[[ports]]
+localPort = 35315
+externalPort = 3002
 
 [userenv]
 
