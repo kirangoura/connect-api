@@ -58,6 +58,10 @@ exposeLocalhost = true
 localPort = 8080
 externalPort = 80
 
+[[ports]]
+localPort = 36863
+externalPort = 3002
+
 [userenv]
 
 [userenv.shared]
