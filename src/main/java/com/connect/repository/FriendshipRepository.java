@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
@@ -32,4 +33,12 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
            "((f.requester = :user1 AND f.addressee = :user2) OR " +
            "(f.requester = :user2 AND f.addressee = :user1)) AND f.status = 'ACCEPTED'")
     boolean areFriends(@Param("user1") User user1, @Param("user2") User user2);
+    
+    @Query("SELECT CASE WHEN f.requester.id = :userId THEN f.addressee.id ELSE f.requester.id END " +
+           "FROM Friendship f WHERE (f.requester.id = :userId OR f.addressee.id = :userId) AND f.status = 'ACCEPTED'")
+    Set<Long> findFriendIds(@Param("userId") Long userId);
+    
+    @Query("SELECT CASE WHEN f.requester.id = :userId THEN f.addressee.id ELSE f.requester.id END " +
+           "FROM Friendship f WHERE (f.requester.id = :userId OR f.addressee.id = :userId) AND f.status = 'PENDING'")
+    Set<Long> findPendingRequestUserIds(@Param("userId") Long userId);
 }
