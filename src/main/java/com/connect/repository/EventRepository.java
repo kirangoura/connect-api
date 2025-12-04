@@ -21,4 +21,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
            "OR LOWER(e.area) LIKE LOWER(CONCAT('%', :search, '%')) " +
            "OR LOWER(e.zipcode) LIKE LOWER(CONCAT('%', :search, '%')))")
     List<Event> searchByLocationAndCategory(@Param("search") String search, @Param("category") String category);
+    
+    List<Event> findByCreatorId(Long creatorId);
 }

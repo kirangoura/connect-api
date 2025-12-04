@@ -43,6 +43,9 @@ public class Event {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
     
+    @Column(name = "creator_id")
+    private Long creatorId;
+    
     // Constructors
     public Event() {}
     
@@ -94,4 +97,7 @@ public class Event {
     
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    
+    public Long getCreatorId() { return creatorId; }
+    public void setCreatorId(Long creatorId) { this.creatorId = creatorId; }
 }
