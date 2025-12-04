@@ -1,4 +1,4 @@
-modules = ["java-graalvm22.3"]
+modules = ["java-graalvm22.3", "postgresql-16"]
 [agent]
 expertMode = true
 
@@ -57,10 +57,6 @@ exposeLocalhost = true
 [[ports]]
 localPort = 8080
 externalPort = 80
-
-[[ports]]
-localPort = 35241
-externalPort = 3002
 
 [userenv]
 

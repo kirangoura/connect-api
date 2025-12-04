@@ -91,6 +91,20 @@ The database is managed separately in the `connect-db` repository. This API does
 ### CORS
 Currently configured to allow all origins (`*`) for development. Will be configured with specific frontend URL for production.
 
+### Security (Endpoint Protection)
+**Public endpoints (no authentication required):**
+- `GET /events` - List all events
+- `GET /events/{id}` - Get single event
+- `GET /events/search` - Search events
+- `POST /auth/*` - All auth endpoints
+
+**Protected endpoints (require JWT token):**
+- All other endpoints require valid JWT token in `Authorization: Bearer <token>` header
+- `/events/my`, `/events/friends`, `/events/created`, `/events/{id}/joined`
+- All `/friends/*` endpoints
+- All `/favorites/*` endpoints
+- All `/users/*` endpoints
+
 ## Running the API
 
 ### Development
