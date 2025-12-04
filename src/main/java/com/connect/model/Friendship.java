@@ -1,6 +1,8 @@
 package com.connect.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
+import io.hypersistence.utils.hibernate.type.basic.PostgreSQLEnumType;
 import java.time.LocalDateTime;
 
 @Entity
@@ -8,7 +10,7 @@ import java.time.LocalDateTime;
 public class Friendship {
     
     public enum Status {
-        PENDING, ACCEPTED, REJECTED
+        pending, accepted, rejected
     }
     
     @Id
@@ -24,8 +26,9 @@ public class Friendship {
     private User addressee;
     
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Status status = Status.PENDING;
+    @Column(columnDefinition = "friendship_status")
+    @Type(PostgreSQLEnumType.class)
+    private Status status = Status.pending;
     
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -49,7 +52,7 @@ public class Friendship {
     public Friendship(User requester, User addressee) {
         this.requester = requester;
         this.addressee = addressee;
-        this.status = Status.PENDING;
+        this.status = Status.pending;
     }
     
     public Long getId() {

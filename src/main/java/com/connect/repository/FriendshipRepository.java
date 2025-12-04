@@ -20,21 +20,21 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
     List<Friendship> findByUserAndStatus(@Param("user") User user, @Param("status") Status status);
     
     default List<Friendship> findAcceptedFriendships(User user) {
-        return findByUserAndStatus(user, Status.ACCEPTED);
+        return findByUserAndStatus(user, Status.accepted);
     }
     
     @Query("SELECT f FROM Friendship f WHERE f.addressee = :user AND f.status = :status")
     List<Friendship> findByAddresseeAndStatus(@Param("user") User user, @Param("status") Status status);
     
     default List<Friendship> findPendingRequestsForUser(User user) {
-        return findByAddresseeAndStatus(user, Status.PENDING);
+        return findByAddresseeAndStatus(user, Status.pending);
     }
     
     @Query("SELECT f FROM Friendship f WHERE f.requester = :user AND f.status = :status")
     List<Friendship> findByRequesterAndStatus(@Param("user") User user, @Param("status") Status status);
     
     default List<Friendship> findSentRequestsByUser(User user) {
-        return findByRequesterAndStatus(user, Status.PENDING);
+        return findByRequesterAndStatus(user, Status.pending);
     }
     
     @Query("SELECT f FROM Friendship f WHERE " +
@@ -48,7 +48,7 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
     boolean areFriendsWithStatus(@Param("user1") User user1, @Param("user2") User user2, @Param("status") Status status);
     
     default boolean areFriends(User user1, User user2) {
-        return areFriendsWithStatus(user1, user2, Status.ACCEPTED);
+        return areFriendsWithStatus(user1, user2, Status.accepted);
     }
     
     @Query("SELECT CASE WHEN f.requester.id = :userId THEN f.addressee.id ELSE f.requester.id END " +
@@ -56,10 +56,10 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
     Set<Long> findRelatedUserIdsByStatus(@Param("userId") Long userId, @Param("status") Status status);
     
     default Set<Long> findFriendIds(Long userId) {
-        return findRelatedUserIdsByStatus(userId, Status.ACCEPTED);
+        return findRelatedUserIdsByStatus(userId, Status.accepted);
     }
     
     default Set<Long> findPendingRequestUserIds(Long userId) {
-        return findRelatedUserIdsByStatus(userId, Status.PENDING);
+        return findRelatedUserIdsByStatus(userId, Status.pending);
     }
 }

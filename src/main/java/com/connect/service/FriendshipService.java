@@ -50,11 +50,11 @@ public class FriendshipService {
             throw new RuntimeException("Not authorized to accept this request");
         }
         
-        if (friendship.getStatus() != Friendship.Status.PENDING) {
+        if (friendship.getStatus() != Friendship.Status.pending) {
             throw new RuntimeException("Request is no longer pending");
         }
         
-        friendship.setStatus(Friendship.Status.ACCEPTED);
+        friendship.setStatus(Friendship.Status.accepted);
         friendship = friendshipRepository.save(friendship);
         
         return new FriendshipDTO(friendship);
@@ -69,11 +69,11 @@ public class FriendshipService {
             throw new RuntimeException("Not authorized to reject this request");
         }
         
-        if (friendship.getStatus() != Friendship.Status.PENDING) {
+        if (friendship.getStatus() != Friendship.Status.pending) {
             throw new RuntimeException("Request is no longer pending");
         }
         
-        friendship.setStatus(Friendship.Status.REJECTED);
+        friendship.setStatus(Friendship.Status.rejected);
         friendship = friendshipRepository.save(friendship);
         
         return new FriendshipDTO(friendship);
