@@ -8,15 +8,16 @@ Spring Boot REST API that manages events data for Portland locations using Postg
 ### Technology Stack
 - **Framework**: Spring Boot 3.1.5
 - **Database**: PostgreSQL (Neon-backed via Replit)
-- **ORM**: Spring Data JPA with Hibernate
+- **ORM**: Spring Data JPA with Hibernate + Hypersistence Utils
 - **Migrations**: Flyway
 - **Security**: Spring Security with JWT authentication
+- **Documentation**: SpringDoc OpenAPI (Swagger UI)
 - **Build**: Gradle 8.4
 
 ### Directory Structure
 ```
 src/main/java/com/connect/
-├── config/             # Configuration classes (Security, CORS)
+├── config/             # Configuration classes (Security, CORS, OpenAPI)
 ├── controller/         # REST controllers (Auth, Event, User, Friends, Favorite)
 ├── dto/                # Data Transfer Objects
 ├── exception/          # Global exception handler
@@ -32,11 +33,11 @@ The database is managed separately in the `connect-db` repository. This API does
 **Entities:**
 - `events` - Event information (title, category, date, location, attendees)
 - `users` - User accounts (email, password hash, profile info)
-- `friendships` - Friend relationships (requester, addressee, status)
+- `friendships` - Friend relationships (requester, addressee, status) - uses PostgreSQL enum `friendship_status`
 - `event_attendees` - Event attendance tracking
 - `favorites` - User's favorited events
 
-## API Endpoints (32 total)
+## API Endpoints (34 total)
 
 ### Authentication (`/auth`)
 - `POST /auth/signup` - Register new user
@@ -48,6 +49,8 @@ The database is managed separately in the `connect-db` repository. This API does
 - `GET /users/profile` - Get own profile
 - `PUT /users/profile` - Update own profile
 - `GET /users/{id}` - Get user by ID
+- `GET /users/discover` - Discover users to connect with (excludes friends/pending)
+- `GET /users/search?q=` - Search users by name/email
 
 ### Events (`/events`)
 - `GET /events` - List all events
@@ -78,6 +81,10 @@ The database is managed separately in the `connect-db` repository. This API does
 - `DELETE /favorites/{eventId}` - Remove from favorites
 - `GET /favorites/{eventId}/check` - Check if event is favorited
 
+### Documentation
+- `GET /swagger-ui/index.html` - Swagger UI (interactive API docs)
+- `GET /v3/api-docs` - OpenAPI 3.0 JSON specification
+
 ## Configuration
 
 ### Environment Variables
@@ -101,6 +108,7 @@ Currently configured to allow all origins (`*`) for development. Will be configu
 - `GET /events/{id}` - Get single event
 - `GET /events/search` - Search events
 - `POST /auth/*` - All auth endpoints
+- `/swagger-ui/**`, `/v3/api-docs/**` - API documentation
 
 **Protected endpoints (require JWT token):**
 - All other endpoints require valid JWT token in `Authorization: Bearer <token>` header
@@ -123,17 +131,22 @@ The API runs on port 8080 with context path `/api`.
 ```
 
 ## Recent Changes (December 2024)
+- Added GET /users/discover endpoint for user discovery (excludes friends/pending requests)
+- Added GET /users/search endpoint for case-insensitive user search with friendship status
+- Added Swagger/OpenAPI documentation with JWT bearer authentication
+- Fixed PostgreSQL enum mapping using hypersistence-utils for friendship_status
+- Improved GlobalExceptionHandler to return proper 405 for unsupported methods
 - Added complete authentication system with Spring Security and JWT
 - Created 5 new entities: User, Friendship, EventAttendee, Favorite
-- Built 5 controllers with 32 total endpoints
+- Built 5 controllers with 34 total endpoints
 - Added global exception handler for better error responses
 - Configured CORS to allow all origins temporarily
-- Fixed PGHOST to use 127.0.0.1 for local database connection
 
 ## User Preferences
 - Database migrations are managed separately in `connect-db` repository - NEVER touch the database schema
 - CORS set to allow all origins temporarily, will configure specific frontend URL later
 - JWT-based authentication with BCrypt password hashing for security
+- PostgreSQL enum types use lowercase values (pending, accepted, rejected)
 
 ## 3-Repo Structure
 This project is part of a 3-repository structure:
