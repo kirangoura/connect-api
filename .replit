@@ -64,7 +64,7 @@ externalPort = 80
 DATABASE_URL = "jdbc:postgresql://localhost:5432/connect_db"
 DB_USER = "postgres"
 DB_PASSWORD = "password"
-SPRING_PROFILES_ACTIVE = "local"
+SPRING_PROFILES_ACTIVE = "neon"
 
 [nix]
 channel = "stable-25_05"
