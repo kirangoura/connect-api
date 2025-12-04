@@ -81,12 +81,16 @@ The database is managed separately in the `connect-db` repository. This API does
 ## Configuration
 
 ### Environment Variables
-- `PGHOST` - PostgreSQL host (default: 127.0.0.1)
-- `PGPORT` - PostgreSQL port (default: 5432)
-- `PGDATABASE` - Database name (default: connect_db)
-- `PGUSER` - Database user (default: runner)
-- `PGPASSWORD` - Database password (default: empty)
+- `SPRING_PROFILES_ACTIVE` - Active profile: `local` or `neon` (default: local)
 - `JWT_SECRET` - Secret key for JWT signing (auto-generated if not set)
+
+**Local Profile Variables:**
+- Uses local PostgreSQL at 127.0.0.1:5432
+
+**Neon Profile Variables (Secrets):**
+- `NEON_DATABASE_URL` - Neon JDBC connection URL
+- `NEON_DB_USER` - Neon database username
+- `NEON_DB_PASSWORD` - Neon database password
 
 ### CORS
 Currently configured to allow all origins (`*`) for development. Will be configured with specific frontend URL for production.
